@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book library</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    
+    <div class="div-header">
+        <header class="main-header">My book library</header>
+    <button class="button"type="button" onclick="openForm()" >save your book</button>
+    </div>
+    <div id="div-form" class="div-form">
+        
+        <div class="div-contents"><p>Author:</p><input class="form-input" id="author"></div>
+        <div class="div-contents"><p>Title:</p><input class="form-input" id="title"></div>
+        <div class="div-contents"><p>Pages:</p><input type="number"class="form-input" id="pages"></div>
+        <div class="div-contents"><p>Have you read it ?</p><input class="form-input" id="hasRead"></input>
+            </div>
+        <div class="div-btn"><div><button type="button" onclick="saveForm()" id="save-btn">Save</button></div>
+        <div><button type="button" onclick="closeForm()"  id="close-btn">close</button></div></div>
+    </div>
+    <div id="object-section">
+
+
+
+    </div>
+</body>
+<script src="app.js">
+</script>
+</html>
