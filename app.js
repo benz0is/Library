@@ -23,17 +23,22 @@ function closeForm(){
 
 var object_section = document.getElementById("object-section")
 
-function saveForm(){
-     if (document.getElementById("author").value=== '' || document.getElementById("title").value==="" || document.getElementById("pages").value==="" || document.getElementById("hasRead").value ===""){
-        save_btn.style.background="red";
-        setTimeout(function(){
-            save_btn.style.background="green"
-        },500)
-        }else{
-            var page = new Book(document.getElementById("author").value,document.getElementById("title").value,document.getElementById("pages").value,document.getElementById("hasRead").value)
-            library.unshift(page)
+const database = firebase.database();
+const rootRef = database.ref('books');
+const autoId = rootRef.push().key;
+
+    rootRef.on('value',gotData,errData);
+    function gotData(data){
+        var scores = data.val();
+        var keys = Object.keys(scores);
+        for(var i=0;i < keys.length;i++){
+            var k = keys[i];
+            var author = scores[k].author;
+            var isRead = scores[k].isRead;
+            var number_of_pages = scores[k].number_of_pages;
+            var title = scores[k].title;
             var section_book = document.createElement('div')
-            section_book.textContent = `The book ${library[0].title} is written by ${library[0].author}.It has ${library[0].number_of_pages} pages. Has it been read: ${library[0].isRead}`;
+            section_book.textContent = `The book ${title} is written by ${author}. The book has ${number_of_pages} pages. Has it been read :${isRead}.`
             section_book.style.height="50px";
             section_book.style.background="gray"
             section_book.style.border="1px solid black"
@@ -50,6 +55,29 @@ function saveForm(){
                 object_section.removeChild(section_book)
                 console.log('it is clicked')
             })
+            }}
+function errData(data){
+    return
+            }
+
+
+
+function saveForm(){
+     if (document.getElementById("author").value=== '' || document.getElementById("title").value==="" || document.getElementById("pages").value==="" || document.getElementById("hasRead").value ===""){
+        save_btn.style.background="red";
+        setTimeout(function(){
+            save_btn.style.background="green"
+        },500)
+        }else{
+            var page = new Book(document.getElementById("author").value,document.getElementById("title").value,document.getElementById("pages").value,document.getElementById("hasRead").value)
+            library.unshift(page)
+            rootRef.child(autoId).set({
+                author:library[0].author,
+                title:library[0].title,
+                number_of_pages:library[0].number_of_pages,
+                isRead:library[0].isRead
+            });
+
 
     document.getElementById("author").value="";
     document.getElementById("title").value="";
@@ -57,4 +85,3 @@ function saveForm(){
     document.getElementById("hasRead").value ="";
         }
 }
-
