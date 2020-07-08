@@ -27,7 +27,7 @@ const database = firebase.database();
 const rootRef = database.ref('books');
 const autoId = rootRef.push().key;
 
-    rootRef.on('value',gotData,errData);
+    rootRef.once('value',gotData,errData);
     function gotData(data){
         var scores = data.val();
         var keys = Object.keys(scores);
@@ -37,7 +37,7 @@ const autoId = rootRef.push().key;
             var isRead = scores[k].isRead;
             var number_of_pages = scores[k].number_of_pages;
             var title = scores[k].title;
-            var section_book = document.createElement('div')
+            let section_book = document.createElement('div')
             section_book.textContent = `The book ${title} is written by ${author}. The book has ${number_of_pages} pages. Has it been read :${isRead}.`
             section_book.style.height="50px";
             section_book.style.background="gray"
